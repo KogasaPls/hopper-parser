@@ -113,7 +113,10 @@ def listNewChatters(lines, tuples):
         index = pair[1]
         i += 1
 
-        message = lines[index]
+        if arg.hideUsers:
+            message = lines[index].replace(chatter, "user")
+        else:
+            message = lines[index]
 
         if arg.hideUsers:
             out.append("New Chatter #" + str(i) + "\n")
@@ -138,14 +141,13 @@ def main():
     # loop through the lines
     i = 0
     for line in lines:
-        i += 1
         if p.match(line):
             chatter = p.match(line).group(1)
             bannedChatters.append([chatter, i])
         elif q.match(line):
             chatter = q.match(line).group(1)
             newChatters.append([chatter, i])
-
+        i += 1
     out = listBannedChatters(lines, bannedChatters, newChatters)
 
     if (arg.all):
