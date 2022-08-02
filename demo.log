@@ -1,5 +1,5 @@
 # Start logging at 2000-01-31 00:00:00 CDT
-[00:00:01]  user: hello
+[00:00:01] [First Message]  user: hello
 [00:03:00]  user2: hi
 [00:03:13]  user: fuk u
 [23:02:36] user has been permanently banned. 

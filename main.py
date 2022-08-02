@@ -30,7 +30,8 @@ def flush(lines, file):
 
 # list of all lines sent by chatter
 def messagesFromChatter(lines, chatter):
-    p = re.compile(r"^(\[\d\d:\d\d:\d\d\])  " + chatter + ": (.*)\n")
+    # my Chatterino is patched to log first-time chatters with "[First Message]" 
+    p = re.compile(r"^(\[\d\d:\d\d:\d\d\](?: \[First Message\])?)  " + chatter + ": (.*)\n")
     # create a list to store the matching lines
     matchingLines = []
     # loop through the lines

@@ -1,0 +1,16 @@
+diff --git a/src/singletons/helper/LoggingChannel.cpp b/src/singletons/helper/LoggingChannel.cpp
+index 54dac7f7..c7b2d09a 100644
+--- a/src/singletons/helper/LoggingChannel.cpp
++++ b/src/singletons/helper/LoggingChannel.cpp
+@@ -101,6 +101,11 @@ void LoggingChannel::addMessage(MessagePtr message)
+     str.append(now.toString("HH:mm:ss"));
+     str.append("] ");
+ 
++    if (message->flags.has(MessageFlag::FirstMessage))
++    {
++        str.append("[First Message] ");
++    }
++
+     str.append(message->searchText);
+     str.append(endline);
+ 
