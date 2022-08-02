@@ -7,7 +7,7 @@ Usage:
 
     > ./main.py --input demo.log
     Chatter #1: user
-    [00:00:01] user: hello
+    [00:00:01] [First Message] user: hello
     [00:03:13] user: fuk u
 
 
