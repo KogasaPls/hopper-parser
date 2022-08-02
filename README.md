@@ -1,6 +1,8 @@
 # hopper-parser
 Parses Chatterino logs and creates a list of users who were permabanned after posting only a couple messages, along with those messages. This builds a fairly good list of hoppers and spammers/bots.
 
+The file `chatterino-log-first-messages.patch` is a git patch for Chatterino that causes "first time chatter" messages (which can be highlighted green) to be indicated in the logs with "[First Message]." This information is preserved by the parser.
+
 Usage:
 
     > ./main.py --input demo.log
