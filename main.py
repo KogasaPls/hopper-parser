@@ -75,7 +75,6 @@ def main():
     p = re.compile(r"^\[\d\d:\d\d:\d\d\] (.*) has been permanently banned. \n")
     # loop through the lines
     i = 0
-    numchatters = 0
     for line in lines:
         i += 1
         m = p.match(line)
