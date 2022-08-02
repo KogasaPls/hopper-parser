@@ -44,7 +44,7 @@ def messagesFromChatter(lines, chatter):
             matchingLines.append(m.group(1) + " " + chatter + ": " + m.group(2) + "\n")
     return matchingLines
 
-# output string to be written to file or printed
+# list of strings to be written to file or printed
 def buildOutput(list, hideUsers=True):
     out = []
     i = 0
