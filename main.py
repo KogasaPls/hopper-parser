@@ -91,16 +91,16 @@ def main():
     p = re.compile(r"^\[\d\d:\d\d:\d\d\] (.*) has been permanently banned. \n")
     # match all bans
     # p = re.compile(r"^\[\d\d:\d\d:\d\d\] (.*) has been (?:permanently banned|timed out for .*). \n")
-    q = re.compile(r"^\[\d\d:\d\d:\d\d\] \[First Message\]  .*\n")
+    q = re.compile(r"^\[\d\d:\d\d:\d\d\] \[First Message\]  (.*): .*\n")
     # loop through the lines
     i = 0
     for line in lines:
         i += 1
-        m = p.match(line)
-        if m:
-            chatter = m.group(1)
+        if p.match(line):
+            chatter = p.match(line).group(1)
             bannedChatters.append([chatter, i])
         elif q.match(line):
+            chatter = q.match(line).group(1)
             newChatters.append([chatter, i])
 
     out = listBannedChatters(lines, bannedChatters, newChatters)
