@@ -88,7 +88,7 @@ def main():
             # messages sent by the chatter
             chatterMessages = messagesFromChatter(recentMessages, chatter)
 
-            # the chatter sent at most 5 recent messages before being permabanned, probably a chatter
+            # the chatter sent at most 5 recent messages before being permabanned
             if 0 < len(chatterMessages) <= arg.numMessages:
                 chatters.append([chatter, chatterMessages])
 
