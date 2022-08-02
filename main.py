@@ -79,8 +79,9 @@ def listBannedChatters(lines, tuples, newChatters):
         out.append("\n")
 
 
-    # remove trailing newline
-    out.pop()
+    # remove trailing newline if out is not empty
+    if len(out) > 0:
+        out.pop()
     return out
 
 def main():
