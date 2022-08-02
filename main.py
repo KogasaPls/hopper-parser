@@ -47,14 +47,6 @@ def messagesFromChatter(lines, chatter):
 # output string to be written to file or printed
 def buildOutput(list, hideUsers=True):
     out = []
-
-    info = "This is a list of chatters who were permabanned after sending at most " + str(arg.numMessages) + " messages out of the last " + str(arg.recentLength) + " lines.\n"
-    if hideUsers:
-        info += "The names of the chatters are hidden.\n"
-
-    info += "\n"
-    out.append(info)
-
     i = 0
     for pair in list:
         chatter = pair[0]
