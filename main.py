@@ -29,31 +29,46 @@ def flush(lines, file):
     f.close()
 
 # list of all lines sent by chatter
-def messagesFromChatter(lines, chatter):
+def messagesFromChatterBefore(lines, chatter, index, newChatters):
     # my Chatterino is patched to log first-time chatters with "[First Message]" 
     p = re.compile(r"^(\[\d\d:\d\d:\d\d\](?: \[First Message\])?)  " + chatter + ": (.*)\n")
     # create a list to store the matching lines
     matchingLines = []
+
+
+    if chatter in newChatters:
+        start = chatter[1]
+    else:
+        start = max(index-arg.recentLength, 0)
+
+    # all messages in the last (default: 500) total lines, or until the first message
+    recentMessages = lines[start:index]
+
     # loop through the lines
-    for line in lines:
+    for line in recentMessages:
         m = p.match(line)
-        # if the line matches the regex
         if m:
             if arg.hideUsers:
                 chatter = "chatter"
-            # add the line to the list
             matchingLines.append(m.group(1) + " " + chatter + ": " + m.group(2) + "\n")
     return matchingLines
 
 # list of strings to be written to file or printed
-def buildOutput(list, hideUsers=True):
+# input: list of tuples of [chatter, index]
+def listBannedChatters(lines, tuples, newChatters):
     out = []
     i = 0
-    for pair in list:
+    for pair in tuples:
         chatter = pair[0]
-        messages = pair[1]
+        index = pair[1]
         i += 1
-        if hideUsers:
+
+        messages = messagesFromChatterBefore(lines, chatter, index, newChatters)
+        if len(messages) == 0 or (len(messages) > arg.numMessages and chatter not in newChatters):
+            continue
+
+
+        if arg.hideUsers:
             out.append("Chatter #" + str(i) + "\n")
         else:
             out.append("Chatter #" + str(i) + ": " + chatter + "\n")
@@ -70,9 +85,13 @@ def buildOutput(list, hideUsers=True):
 
 def main():
     lines = readLines(arg.input)
-    # create an empty array
     chatters = []
+    bannedChatters = []
+    newChatters = []
     p = re.compile(r"^\[\d\d:\d\d:\d\d\] (.*) has been permanently banned. \n")
+    # match all bans
+    # p = re.compile(r"^\[\d\d:\d\d:\d\d\] (.*) has been (?:permanently banned|timed out for .*). \n")
+    q = re.compile(r"^\[\d\d:\d\d:\d\d\] \[First Message\]  .*\n")
     # loop through the lines
     i = 0
     for line in lines:
@@ -80,19 +99,11 @@ def main():
         m = p.match(line)
         if m:
             chatter = m.group(1)
+            bannedChatters.append([chatter, i])
+        elif q.match(line):
+            newChatters.append([chatter, i])
 
-            # all messages in the last 500 total lines
-            start = max(i-arg.recentLength, 0)
-            recentMessages = lines[start:i]
-
-            # messages sent by the chatter
-            chatterMessages = messagesFromChatter(recentMessages, chatter)
-
-            # the chatter sent at most 5 recent messages before being permabanned
-            if 0 < len(chatterMessages) <= arg.numMessages:
-                chatters.append([chatter, chatterMessages])
-
-    out = buildOutput(chatters, arg.hideUsers)
+    out = listBannedChatters(lines, bannedChatters, newChatters)
 
     if arg.output:
         flush(out, arg.output)
