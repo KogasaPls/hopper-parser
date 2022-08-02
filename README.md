@@ -19,6 +19,8 @@ Optional arguments:
 
     --hideUsers: hide usernames
 
-    --numMessages: (default: 5)  the maximum number of recent messages before a chatter is omitted from the list
+    --numMessages: (default: 5)  the maximum number of recent messages before a non-first time chatter is omitted from the list
 
     --recentLength: (default: 500) the maximum number of messages to check prior to each permaban
+
+    --all: show all first time chatters after the list of permabanned chatters (requires my Chatterino patch)
