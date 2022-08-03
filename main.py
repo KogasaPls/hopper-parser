@@ -34,7 +34,7 @@ arg = parser.parse_args()
 
 def readLines(file):
     # open the file
-    f = open(file, "r", encoding='cp437')
+    f = open(file, "r", encoding='utf-8')
     # read the file
     lines = f.readlines()
     # close the file
@@ -45,7 +45,7 @@ def readLines(file):
 
 
 def flush(lines, file):
-    f = open(file, "w", encoding='cp437')
+    f = open(file, "w", encoding='utf-8')
     for line in lines:
         f.write(line)
     f.close()
