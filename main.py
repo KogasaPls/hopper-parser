@@ -86,12 +86,12 @@ def listBannedChatters(lines, tuples, newChatters):
     for pair in tuples:
         chatter = pair[0]
         index = pair[1]
-        i += 1
 
         messages = messagesFromChatterBefore(lines, chatter, index, newChatters)
         if len(messages) == 0 or (len(messages) > arg.numMessages and chatter not in newChatters):
             continue
 
+        i += 1
         if arg.hideUsers:
             out.append("Banned Chatter #" + str(i) + "\n")
         else:
